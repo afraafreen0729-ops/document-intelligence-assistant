@@ -1,0 +1,23 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Local configuration and secrets
+.env
+.streamlit/secrets.toml
+
+# Uploaded PDFs and local test documents
+*.pdf
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
