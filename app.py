@@ -147,7 +147,7 @@ st.markdown("""
 # =====================================================
 
 SEMANTIC_THRESHOLD = 0.40
-TFIDF_THRESHOLD = 0.20
+TFIDF_THRESHOLD = 0.25
 TOP_K = 5
 
 
