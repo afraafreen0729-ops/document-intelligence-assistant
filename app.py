@@ -244,8 +244,8 @@ def call_ollama(prompt, num_predict=300):
 
 def summarize_document(document_chunks, progress_bar):
 
-    # Larger batches reduce the number of AI requests.
-    batch_size = 20
+    # Smaller output and fewer AI requests improve response time.
+    batch_size = 24
 
     batches = [
         document_chunks[i:i + batch_size]
@@ -265,16 +265,15 @@ def summarize_document(document_chunks, progress_bar):
         )
 
         prompt = (
-            "Summarize the following passages in up to five concise "
-            "bullet points. Preserve the main ideas and important "
-            "findings. Use only the supplied information and include "
-            "page references when useful.\n\n"
+            "Summarize these document passages in at most "
+            "4 concise bullet points. Preserve the key ideas "
+            "and findings. Do not invent information.\n\n"
             f"{passages}"
         )
 
         summary = call_ollama(
             prompt,
-            num_predict=120
+            num_predict=80
         )
 
         batch_summaries.append(
@@ -288,17 +287,16 @@ def summarize_document(document_chunks, progress_bar):
     combined_summaries = "\n\n".join(batch_summaries)
 
     final_prompt = (
-        "Create a clear, organised summary using the following "
-        "section summaries. Include the main purpose, key concepts, "
-        "methods, findings and limitations where available. "
-        "Use headings and bullet points. Do not invent information. "
-        "Retain any page references provided.\n\n"
+        "Create a concise, organised summary of this document. "
+        "Include its purpose, main concepts, methods, findings, "
+        "and limitations where available. Use only the information "
+        "provided. Do not invent facts. Preserve page references.\n\n"
         f"{combined_summaries}"
     )
 
     final_summary = call_ollama(
         final_prompt,
-        num_predict=350
+        num_predict=200
     )
 
     progress_bar.progress(1.0)
